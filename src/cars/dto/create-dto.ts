@@ -1,4 +1,4 @@
-export class CreateCardDto {
+export class CreateCarDto {
   readonly brand: string;
   readonly model: string;
 }
