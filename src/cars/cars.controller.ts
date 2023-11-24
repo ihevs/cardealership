@@ -15,7 +15,6 @@ export class CarsController {
     //   return 'ID should be a number';
     // }
     console.log({ id });
-    throw new Error('This is a new error');
     return this.carsService.findOneById(+id);
   }
 }
