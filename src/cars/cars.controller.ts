@@ -9,7 +9,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
-import { CreateCarDto } from './dto/create-dto';
+import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')
 export class CarsController {
@@ -20,7 +21,7 @@ export class CarsController {
   }
 
   @Get('/:id')
-  getCarById(@Param('id', new ParseUUIDPipe({ version: '5' })) id: string) {
+  getCarById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     // if (isNaN(+id)) {
     //   return 'ID should be a number';
     // }
@@ -30,16 +31,19 @@ export class CarsController {
 
   @Post()
   createCar(@Body() createCarDto: CreateCarDto) {
-    return createCarDto;
+    return this.carsService.create(createCarDto);
   }
 
   @Patch(':id')
-  updateCar(@Param('id') id: string, @Body() body: any) {
-    return body;
+  updateCar(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateCarDto: UpdateCarDto,
+  ) {
+    return this.carsService.update(id, updateCarDto);
   }
 
   @Delete(':id')
-  deleteCar(@Param('id') id: number) {
-    return { method: 'DELETE', id };
+  deleteCar(@Param('id', ParseUUIDPipe) id: string) {
+    return this.carsService.deele(id);
   }
 }
